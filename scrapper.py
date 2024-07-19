@@ -15,13 +15,6 @@ service = Service(
   ChromeDriverManager().install()
 )
 
-try:
-    if determined_browser_version:
-        determined_browser_version = ".".join(determined_browser_version.split(".")[:3])
-except AttributeError:
-    print("Error: Unable to split version string.")
-    # Handle the error or raise it further as needed
-
 driver = webdriver.Chrome(
   service=service, options=chrome_options
 )
