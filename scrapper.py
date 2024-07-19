@@ -10,7 +10,7 @@ import pandas as pd
 import streamlit as st
 
 chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--headless") 
+#chrome_options.add_argument("--headless") 
 service = Service(
   ChromeDriverManager().install()
 )
