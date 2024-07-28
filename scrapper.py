@@ -104,12 +104,13 @@ def scraper(query):
             df = pd.DataFrame(results)
             df.to_csv(f'{keyword}.csv')
             st.success(f'File {keyword}.csv downloaded successfully')
-        else:
+    else:
             st.warning("No results found")
 
-    except Exception as e:
+
+  except Exception as e:
         st.error(f"Scraping Error: {e}")
-    finally:
+  finally:
         driver.quit()
 
 def main():
