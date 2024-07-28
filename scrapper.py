@@ -28,9 +28,10 @@ def scraper(query):
     driver.get(f'https://www.google.com/maps/search/{keyword}/')
 
     try:
-      WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "form:nth-child(2)"))).click()
-    except Exception:
-      pass
+            WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "form:nth-child(2)"))).click()
+    except Exception as e:
+          st.error(f"Initial Click Error: {e}")
+          pass
 
     scrollable_div = driver.find_element(By.CSS_SELECTOR, 'div[role="feed"]')
     driver.execute_script("""
@@ -99,13 +100,17 @@ def scraper(query):
 
       if (data.get('title')):
         results.append(data)
-    df = pd.DataFrame(results)
+    if results:
+            df = pd.DataFrame(results)
+            df.to_csv(f'{keyword}.csv')
+            st.success(f'File {keyword}.csv downloaded successfully')
+        else:
+            st.warning("No results found")
 
-
-    df.to_csv(f'{keyword}.csv')
-
-  finally:
-    driver.quit()
+    except Exception as e:
+        st.error(f"Scraping Error: {e}")
+    finally:
+        driver.quit()
 
 def main():
   st.title("Google Map Scrapper")
